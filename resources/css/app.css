@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-primary-bg text-text-main font-sans;
+    }
+}
+
+@layer components {
+    /* 3D Card Effects */
+    .card-3d {
+        @apply transition-all duration-300 ease-in-out;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+    }
+
+    .card-3d:hover {
+        @apply shadow-2xl;
+        transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+        box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+    }
+
+    /* Accent Glow Effect */
+    .accent-glow {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .accent-glow:hover {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    }
+
+    /* Primary Button */
+    .btn-primary {
+        @apply bg-accent text-primary-bg font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+    }
+
+    .btn-primary:hover {
+        @apply shadow-lg;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        transform: translateY(-2px);
+    }
+
+    /* Secondary Button */
+    .btn-secondary {
+        @apply border-2 border-accent text-accent font-semibold px-6 py-3 rounded-lg transition-all duration-300 bg-transparent;
+    }
+
+    .btn-secondary:hover {
+        @apply bg-accent text-primary-bg;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    }
+
+    /* Card Styles */
+    .card {
+        @apply bg-secondary-bg rounded-lg p-6 border border-gray-700;
+    }
+
+    /* Form Input Styles */
+    .form-input {
+        @apply bg-secondary-bg border border-gray-600 text-text-main rounded-lg px-4 py-3 focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-50 transition-all;
+    }
+
+    .form-label {
+        @apply text-text-main font-medium mb-2 block;
+    }
+
+    /* Project Card with 3D Effect */
+    .project-card {
+        @apply card card-3d cursor-pointer overflow-hidden;
+    }
+
+    .project-card img {
+        @apply transition-transform duration-300;
+    }
+
+    .project-card:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Partner Logo Card */
+    .partner-card {
+        @apply bg-secondary-bg rounded-lg p-6 card-3d flex items-center justify-center;
+        min-height: 150px;
+    }
+
+    /* Navigation Styles */
+    .nav-link {
+        @apply text-text-main hover:text-accent transition-colors duration-300 font-medium;
+    }
+
+    .nav-link.active {
+        @apply text-accent;
+    }
+
+    /* Hero Section Gradient */
+    .hero-gradient {
+        background: linear-gradient(135deg, #1A202C 0%, #2D3748 50%, #1A202C 100%);
+    }
+
+    /* Animated Underline */
+    .animated-underline {
+        position: relative;
+    }
+
+    .animated-underline::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: theme('colors.accent');
+        transition: width 0.3s ease;
+    }
+
+    .animated-underline:hover::after {
+        width: 100%;
+    }
+
+    /* Glowing Border Effect */
+    .glow-border {
+        border: 2px solid theme('colors.accent');
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% {
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+        }
+    }
+
+    /* Team Member Card */
+    .team-card {
+        @apply card card-3d text-center;
+    }
+
+    .team-card img {
+        @apply rounded-full mx-auto mb-4 border-4 border-accent;
+    }
+
+    /* Service Card */
+    .service-card {
+        @apply card card-3d;
+    }
+
+    .service-card:hover .service-icon {
+        @apply text-accent;
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .service-icon {
+        @apply text-highlight transition-all duration-300;
+    }
+}
