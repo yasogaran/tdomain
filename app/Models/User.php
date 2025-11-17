@@ -46,4 +46,28 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Check if user is admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if user is editor
+     */
+    public function isEditor(): bool
+    {
+        return $this->role === 'editor';
+    }
+
+    /**
+     * Check if user has admin or editor role
+     */
+    public function canAccessAdmin(): bool
+    {
+        return in_array($this->role, ['admin', 'editor']);
+    }
 }
