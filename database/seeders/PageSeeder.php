@@ -181,6 +181,74 @@ Sunday: Closed</p>',
                 'meta_title' => 'Careers - Join Our Growing Team',
                 'meta_description' => 'Explore career opportunities at our company. We are looking for talented individuals passionate about technology and innovation.',
             ],
+            [
+                'slug' => 'services',
+                'title' => 'Our Services',
+                'content' => '<h2>What We Offer</h2>
+<p>We provide comprehensive technology solutions tailored to meet the unique needs of modern businesses. Our expertise spans across various domains of software development and digital transformation.</p>
+
+<h3>Web Development</h3>
+<p>Custom web applications built with modern frameworks and technologies. From simple websites to complex web platforms, we deliver scalable and performant solutions.</p>
+<ul>
+<li>Responsive website design and development</li>
+<li>Progressive Web Applications (PWA)</li>
+<li>E-commerce platforms</li>
+<li>Content Management Systems</li>
+<li>API development and integration</li>
+</ul>
+
+<h3>Mobile Development</h3>
+<p>Native and cross-platform mobile applications that provide exceptional user experiences across iOS and Android devices.</p>
+<ul>
+<li>Native iOS and Android apps</li>
+<li>Cross-platform development (React Native, Flutter)</li>
+<li>Mobile app UI/UX design</li>
+<li>App store optimization</li>
+<li>Mobile backend services</li>
+</ul>
+
+<h3>Cloud Solutions</h3>
+<p>Leverage the power of cloud computing to scale your business infrastructure and reduce operational costs.</p>
+<ul>
+<li>Cloud migration and architecture</li>
+<li>AWS, Azure, Google Cloud services</li>
+<li>DevOps and CI/CD implementation</li>
+<li>Cloud security and compliance</li>
+<li>Serverless architecture</li>
+</ul>
+
+<h3>Enterprise Solutions</h3>
+<p>Large-scale enterprise applications designed to streamline business processes and improve operational efficiency.</p>
+<ul>
+<li>ERP and CRM systems</li>
+<li>Business process automation</li>
+<li>Data analytics and reporting</li>
+<li>Legacy system modernization</li>
+<li>System integration</li>
+</ul>
+
+<h3>IT Consulting</h3>
+<p>Strategic technology consulting to help you make informed decisions about your digital transformation journey.</p>
+<ul>
+<li>Technology strategy and roadmap</li>
+<li>Architecture design and review</li>
+<li>Security audits and compliance</li>
+<li>Performance optimization</li>
+<li>Technical due diligence</li>
+</ul>
+
+<h3>UI/UX Design</h3>
+<p>User-centered design that creates intuitive and engaging experiences for your customers.</p>
+<ul>
+<li>User research and personas</li>
+<li>Wireframing and prototyping</li>
+<li>Visual design and branding</li>
+<li>Usability testing</li>
+<li>Design systems</li>
+</ul>',
+                'meta_title' => 'Our Services - Comprehensive Technology Solutions',
+                'meta_description' => 'Explore our range of technology services including web development, mobile apps, cloud solutions, enterprise systems, IT consulting, and UI/UX design.',
+            ],
         ];
 
         foreach ($pages as $pageData) {
