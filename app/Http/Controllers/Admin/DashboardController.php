@@ -18,10 +18,7 @@ class DashboardController extends Controller
         $stats = $this->getStatistics();
 
         // Get recent quotations (last 10)
-        $recentQuotations = Quotation::with(['user' => function($query) {
-                $query->select('id', 'name');
-            }])
-            ->latest()
+        $recentQuotations = Quotation::latest()
             ->take(10)
             ->get();
 
