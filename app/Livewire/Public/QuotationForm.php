@@ -105,6 +105,22 @@ class QuotationForm extends Component
         }
     }
 
+    public function resetForm()
+    {
+        $this->reset([
+            'name',
+            'company',
+            'email',
+            'phone',
+            'service_type',
+            'budget',
+            'timeline',
+            'description',
+            'submissionSuccess',
+            'currentStep',
+        ]);
+    }
+
     public function render()
     {
         return view('livewire.public.quotation-form');

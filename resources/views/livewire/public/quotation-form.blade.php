@@ -1,18 +1,87 @@
 <div class="bg-secondary-bg rounded-xl p-8 lg:p-10">
-    @if(session()->has('message'))
-        <div class="mb-8 bg-accent/10 border border-accent/30 rounded-lg p-4">
+    @if(session()->has('error'))
+        <div class="mb-8 bg-red-500/10 border border-red-500/30 rounded-lg p-4">
             <div class="flex items-start space-x-3">
-                <svg class="w-6 h-6 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <svg class="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <div>
-                    <h3 class="text-lg font-semibold text-accent mb-1">Success!</h3>
-                    <p class="text-text-main/80">{{ session('message') }}</p>
+                    <h3 class="text-lg font-semibold text-red-500 mb-1">Error!</h3>
+                    <p class="text-text-main/80">{{ session('error') }}</p>
                 </div>
             </div>
         </div>
     @endif
 
+    @if($submissionSuccess)
+        <!-- Success Message -->
+        <div class="text-center py-12">
+            <div class="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <h2 class="text-3xl font-bold text-text-main mb-4">
+                Thank You for Your Request!
+            </h2>
+
+            <p class="text-lg text-text-main/80 mb-6 max-w-2xl mx-auto">
+                We've received your quotation request and will review it shortly.
+                Our team will get back to you within 24-48 hours with a detailed proposal.
+            </p>
+
+            <div class="bg-accent/10 border border-accent/30 rounded-lg p-6 mb-8 max-w-2xl mx-auto">
+                <div class="flex items-start space-x-3">
+                    <svg class="w-6 h-6 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <div class="text-left">
+                        <h4 class="font-semibold text-accent mb-1">Confirmation Email Sent</h4>
+                        <p class="text-sm text-text-main/80">
+                            We've sent a confirmation email to <strong>{{ $email }}</strong>.
+                            Please check your inbox (and spam folder) for details about your request.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <p class="text-text-main/60">
+                    <strong>What happens next?</strong>
+                </p>
+                <ul class="text-text-main/80 space-y-2 max-w-md mx-auto text-left">
+                    <li class="flex items-start space-x-2">
+                        <span class="text-accent mt-1">1.</span>
+                        <span>Our team will review your requirements</span>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <span class="text-accent mt-1">2.</span>
+                        <span>We'll prepare a customized proposal for your project</span>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <span class="text-accent mt-1">3.</span>
+                        <span>You'll receive a detailed quotation via email</span>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <span class="text-accent mt-1">4.</span>
+                        <span>We'll schedule a call to discuss next steps</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-8 flex justify-center space-x-4">
+                <a href="{{ route('home') }}"
+                   class="px-6 py-3 bg-accent hover:bg-highlight text-primary-bg font-medium rounded-lg transition-colors">
+                    Return to Home
+                </a>
+                <button wire:click="resetForm"
+                        class="px-6 py-3 bg-secondary-bg hover:bg-text-main/5 text-text-main font-medium rounded-lg transition-colors border border-text-main/10">
+                    Submit Another Request
+                </button>
+            </div>
+        </div>
+    @else
     <form wire:submit="submit">
         <div class="grid md:grid-cols-2 gap-6">
             <!-- Name -->
@@ -157,4 +226,5 @@
             We respect your privacy. Your information will be kept confidential and used solely for responding to your inquiry.
         </p>
     </form>
+    @endif
 </div>
