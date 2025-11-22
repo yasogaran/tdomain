@@ -222,4 +222,166 @@
             </div>
         </form>
     </div>
+
+    <!-- Media Gallery Section -->
+    <div class="bg-secondary-bg rounded-xl p-8 border border-text-main/10 mt-6">
+        <h2 class="text-xl font-bold text-text-main mb-6">Media Gallery</h2>
+
+        <!-- Upload Section -->
+        <div class="mb-8">
+            <div class="border-2 border-dashed border-text-main/20 rounded-lg p-8 text-center hover:border-accent transition-colors">
+                <input type="file"
+                       id="mediaUpload"
+                       accept="image/*,video/*"
+                       class="hidden"
+                       onchange="handleMediaUpload(event)">
+                <label for="mediaUpload" class="cursor-pointer">
+                    <svg class="w-12 h-12 text-text-main/40 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    <p class="text-text-main font-medium mb-2">Click to upload media</p>
+                    <p class="text-text-main/60 text-sm">Images (JPG, PNG, GIF) or Videos (MP4, MOV, AVI)</p>
+                    <p class="text-text-main/40 text-xs mt-1">Max size: 20MB</p>
+                </label>
+            </div>
+
+            <!-- Upload Progress -->
+            <div id="uploadProgress" class="hidden mt-4">
+                <div class="bg-primary-bg rounded-lg p-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex-1">
+                            <div class="h-2 bg-text-main/10 rounded-full overflow-hidden">
+                                <div id="progressBar" class="h-full bg-accent transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <span id="progressText" class="text-sm text-text-main/60">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Existing Media -->
+        <div id="mediaGallery" class="grid md:grid-cols-3 gap-4">
+            @foreach($project->media as $media)
+                <div class="relative group media-item" data-media-id="{{ $media->id }}">
+                    <div class="relative rounded-lg overflow-hidden bg-primary-bg">
+                        @if($media->type === 'image')
+                            <img src="{{ Storage::url($media->path) }}"
+                                 alt="{{ $media->caption }}"
+                                 class="w-full h-48 object-cover">
+                        @else
+                            <video src="{{ Storage::url($media->path) }}"
+                                   class="w-full h-48 object-cover"
+                                   controls></video>
+                        @endif
+
+                        <!-- Delete Button -->
+                        <button type="button"
+                                onclick="deleteMedia({{ $media->id }})"
+                                class="absolute top-2 right-2 p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    @if($media->caption)
+                        <p class="mt-2 text-sm text-text-main/60">{{ $media->caption }}</p>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+
+        @if($project->media->count() === 0)
+            <p class="text-center text-text-main/60 py-8">No media uploaded yet</p>
+        @endif
+    </div>
+
+    @push('scripts')
+    <script>
+        function handleMediaUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('type', file.type.startsWith('video/') ? 'video' : 'image');
+
+            // Show progress
+            const progressContainer = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            progressContainer.classList.remove('hidden');
+
+            // Upload
+            const xhr = new XMLHttpRequest();
+
+            xhr.upload.addEventListener('progress', (e) => {
+                if (e.lengthComputable) {
+                    const percentComplete = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = percentComplete + '%';
+                    progressText.textContent = percentComplete + '%';
+                }
+            });
+
+            xhr.addEventListener('load', () => {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+
+                    // Reload page to show new media
+                    window.location.reload();
+                } else {
+                    alert('Upload failed. Please try again.');
+                    progressContainer.classList.add('hidden');
+                }
+            });
+
+            xhr.addEventListener('error', () => {
+                alert('Upload failed. Please try again.');
+                progressContainer.classList.add('hidden');
+            });
+
+            xhr.open('POST', '{{ route('admin.projects.media.upload', $project) }}');
+            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+            xhr.send(formData);
+
+            // Reset file input
+            event.target.value = '';
+        }
+
+        function deleteMedia(mediaId) {
+            if (!confirm('Are you sure you want to delete this media?')) {
+                return;
+            }
+
+            fetch(`/admin/projects/media/${mediaId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove the media item from DOM
+                    document.querySelector(`[data-media-id="${mediaId}"]`).remove();
+
+                    // Show empty state if no media left
+                    const gallery = document.getElementById('mediaGallery');
+                    if (gallery.children.length === 0) {
+                        gallery.innerHTML = '<p class="col-span-3 text-center text-text-main/60 py-8">No media uploaded yet</p>';
+                    }
+                } else {
+                    alert('Failed to delete media. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete media. Please try again.');
+            });
+        }
+    </script>
+    @endpush
 </x-admin-layout>

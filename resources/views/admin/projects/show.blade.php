@@ -82,7 +82,13 @@
 
             <!-- Media Gallery -->
             <div class="bg-secondary-bg rounded-xl p-6 border border-text-main/10">
-                <h3 class="text-lg font-bold text-text-main mb-4">Media Gallery</h3>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-text-main">Media Gallery</h3>
+                    <a href="{{ route('admin.projects.edit', $project) }}#mediaGallery"
+                       class="text-sm text-accent hover:text-highlight transition-colors">
+                        Manage Media →
+                    </a>
+                </div>
 
                 @if($project->media->count() > 0)
                     <div class="grid md:grid-cols-2 gap-4">
@@ -105,7 +111,13 @@
                         @endforeach
                     </div>
                 @else
-                    <p class="text-text-main/60 text-center py-8">No media uploaded yet</p>
+                    <div class="text-center py-8">
+                        <p class="text-text-main/60 mb-4">No media uploaded yet</p>
+                        <a href="{{ route('admin.projects.edit', $project) }}"
+                           class="inline-block px-4 py-2 bg-accent hover:bg-highlight text-primary-bg text-sm font-medium rounded-lg transition-colors">
+                            Upload Media
+                        </a>
+                    </div>
                 @endif
             </div>
         </div>
