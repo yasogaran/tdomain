@@ -24,6 +24,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('projects', ProjectController::class);
     Route::post('projects/{project}/media', [ProjectController::class, 'uploadMedia'])->name('projects.media.upload');
     Route::delete('projects/media/{media}', [ProjectController::class, 'deleteMedia'])->name('projects.media.delete');
+    Route::put('projects/media/{media}/caption', [ProjectController::class, 'updateMediaCaption'])->name('projects.media.caption');
+    Route::post('projects/media/reorder', [ProjectController::class, 'reorderMedia'])->name('projects.media.reorder');
 
     // Partners Management
     Route::resource('partners', PartnerController::class);

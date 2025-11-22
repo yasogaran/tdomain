@@ -188,6 +188,46 @@ class ProjectController extends Controller
     }
 
     /**
+     * Update media caption
+     */
+    public function updateMediaCaption(Request $request, ProjectMedia $media)
+    {
+        $request->validate([
+            'caption' => 'nullable|string|max:255',
+        ]);
+
+        $media->update([
+            'caption' => $request->input('caption'),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Caption updated successfully!',
+        ]);
+    }
+
+    /**
+     * Reorder project media
+     */
+    public function reorderMedia(Request $request)
+    {
+        $request->validate([
+            'media' => 'required|array',
+            'media.*.id' => 'required|exists:project_media,id',
+            'media.*.order' => 'required|integer|min:0',
+        ]);
+
+        foreach ($request->media as $item) {
+            ProjectMedia::where('id', $item['id'])->update(['order' => $item['order']]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Media reordered successfully!',
+        ]);
+    }
+
+    /**
      * Upload and optimize image
      */
     private function uploadImage($file)
