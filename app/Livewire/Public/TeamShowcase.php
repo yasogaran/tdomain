@@ -9,13 +9,12 @@ class TeamShowcase extends Component
 {
     public function render()
     {
-        $teamMembers = TeamMember::orderBy('department')
-            ->orderBy('order')
-            ->get()
-            ->groupBy('department');
+        $teamMembers = TeamMember::orderBy('order')
+            ->orderBy('name')
+            ->get();
 
         return view('livewire.public.team-showcase', [
-            'departments' => $teamMembers,
+            'teamMembers' => $teamMembers,
         ]);
     }
 }
