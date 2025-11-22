@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\PageController;
 use App\Http\Controllers\Web\PortfolioController;
 use App\Http\Controllers\Web\QuotationController;
+use App\Http\Controllers\Web\BrandingController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
@@ -14,6 +15,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Portfolio Routes
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
 Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
+
+// Branding Packages Routes
+Route::get('/branding-packages', [BrandingController::class, 'index'])->name('branding-packages.index');
+Route::get('/branding-packages/{slug}', [BrandingController::class, 'show'])->name('branding-packages.show');
 
 // Quotation Route
 Route::get('/request-quote', [QuotationController::class, 'create'])->name('quotation.create');
