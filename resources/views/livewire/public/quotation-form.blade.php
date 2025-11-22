@@ -44,7 +44,7 @@
             <!-- Phone -->
             <div>
                 <label for="phone" class="block text-sm font-medium text-text-main mb-2">
-                    Phone Number
+                    Phone Number <span class="text-accent">*</span>
                 </label>
                 <input type="tel"
                        id="phone"
@@ -57,7 +57,7 @@
             <!-- Company -->
             <div>
                 <label for="company" class="block text-sm font-medium text-text-main mb-2">
-                    Company Name
+                    Company Name <span class="text-accent">*</span>
                 </label>
                 <input type="text"
                        id="company"
@@ -89,11 +89,11 @@
 
             <!-- Budget Range -->
             <div>
-                <label for="budget_range" class="block text-sm font-medium text-text-main mb-2">
-                    Budget Range
+                <label for="budget" class="block text-sm font-medium text-text-main mb-2">
+                    Budget Range <span class="text-accent">*</span>
                 </label>
-                <select id="budget_range"
-                        wire:model="budget_range"
+                <select id="budget"
+                        wire:model="budget"
                         class="w-full bg-primary-bg border border-accent/30 rounded-lg px-4 py-3 text-text-main focus:ring-2 focus:ring-accent focus:border-accent transition-colors">
                     <option value="">Select budget range</option>
                     <option value="<$10k">Less than $10,000</option>
@@ -102,7 +102,7 @@
                     <option value="$50k-$100k">$50,000 - $100,000</option>
                     <option value="$100k+">$100,000+</option>
                 </select>
-                @error('budget_range') <span class="text-red-400 text-sm mt-1">{{ $message }}</span> @enderror
+                @error('budget') <span class="text-red-400 text-sm mt-1">{{ $message }}</span> @enderror
             </div>
         </div>
 
@@ -122,7 +122,7 @@
         <!-- Timeline -->
         <div class="mt-6">
             <label for="timeline" class="block text-sm font-medium text-text-main mb-2">
-                Expected Timeline
+                Expected Timeline <span class="text-accent">*</span>
             </label>
             <select id="timeline"
                     wire:model="timeline"
