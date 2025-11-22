@@ -18,9 +18,7 @@ class PageController extends Controller
 
     public function services(): View
     {
-        $page = Page::where('slug', 'services')->firstOrFail();
-
-        return view('pages.services', compact('page'));
+        return view('pages.services');
     }
 
     public function serviceDetail(string $slug): View
