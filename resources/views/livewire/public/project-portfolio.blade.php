@@ -4,25 +4,25 @@
         <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
             <div class="flex flex-wrap gap-3">
                 <!-- Industry Filter -->
-                <select wire:model.live="selectedIndustry"
+                <select wire:model.live="industry"
                         class="bg-secondary-bg border border-accent/30 text-text-main rounded-lg px-4 py-2 focus:ring-2 focus:ring-accent focus:border-accent transition-colors">
                     <option value="">All Industries</option>
-                    @foreach($industries as $industry)
-                        <option value="{{ $industry }}">{{ $industry }}</option>
+                    @foreach($this->industries as $industryOption)
+                        <option value="{{ $industryOption }}">{{ $industryOption }}</option>
                     @endforeach
                 </select>
 
                 <!-- Service Type Filter -->
-                <select wire:model.live="selectedServiceType"
+                <select wire:model.live="serviceType"
                         class="bg-secondary-bg border border-accent/30 text-text-main rounded-lg px-4 py-2 focus:ring-2 focus:ring-accent focus:border-accent transition-colors">
                     <option value="">All Services</option>
-                    @foreach($serviceTypes as $type)
+                    @foreach($this->serviceTypes as $type)
                         <option value="{{ $type }}">{{ $type }}</option>
                     @endforeach
                 </select>
 
                 <!-- Clear Filters -->
-                @if($selectedIndustry || $selectedServiceType)
+                @if($industry || $serviceType)
                     <button wire:click="clearFilters"
                             class="px-4 py-2 text-accent hover:text-highlight transition-colors font-medium">
                         Clear Filters
