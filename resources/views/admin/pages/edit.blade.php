@@ -55,10 +55,8 @@
                     </label>
                     <textarea id="content"
                               name="content"
-                              rows="15"
-                              required
-                              class="w-full px-4 py-3 bg-primary-bg border border-text-main/10 rounded-lg text-text-main focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent font-mono text-sm">{{ old('content', $page->content) }}</textarea>
-                    <p class="mt-1 text-sm text-text-main/40">Supports HTML and Markdown</p>
+                              required>{{ old('content', $page->content) }}</textarea>
+                    <p class="mt-1 text-sm text-text-main/40">Use the rich text editor to format your content</p>
                     @error('content')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
@@ -116,4 +114,107 @@
             </div>
         </form>
     </div>
+
+    @push('styles')
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <style>
+        /* Summernote Dark Theme Customization */
+        .note-editor.note-frame {
+            border: 1px solid rgba(226, 232, 240, 0.1);
+            background: #0F1419;
+        }
+        .note-editor .note-toolbar {
+            background: #1a1f29;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+        }
+        .note-editor .note-editing-area .note-editable {
+            background: #0F1419;
+            color: #E2E8F0;
+            min-height: 400px;
+        }
+        .note-editor .note-statusbar {
+            background: #1a1f29;
+            border-top: 1px solid rgba(226, 232, 240, 0.1);
+        }
+        .note-btn {
+            background: transparent !important;
+            color: #E2E8F0 !important;
+            border: none !important;
+        }
+        .note-btn:hover {
+            background: rgba(0, 255, 255, 0.1) !important;
+        }
+        .note-dropdown-menu {
+            background: #1a1f29;
+            border: 1px solid rgba(226, 232, 240, 0.1);
+        }
+        .note-dropdown-menu .dropdown-item {
+            color: #E2E8F0;
+        }
+        .note-dropdown-menu .dropdown-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+        }
+        .note-modal .modal-content {
+            background: #1a1f29;
+            color: #E2E8F0;
+        }
+        .note-modal .modal-header {
+            border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+        }
+        .note-modal .modal-footer {
+            border-top: 1px solid rgba(226, 232, 240, 0.1);
+        }
+        .note-modal .form-control {
+            background: #0F1419;
+            color: #E2E8F0;
+            border: 1px solid rgba(226, 232, 240, 0.1);
+        }
+    </style>
+    @endpush
+
+    @push('scripts')
+    <!-- jQuery (required for Summernote) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#content').summernote({
+                height: 400,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video', 'hr']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                styleTags: [
+                    'p',
+                    { title: 'Heading 1', tag: 'h1', className: '', value: 'h1' },
+                    { title: 'Heading 2', tag: 'h2', className: '', value: 'h2' },
+                    { title: 'Heading 3', tag: 'h3', className: '', value: 'h3' },
+                    { title: 'Heading 4', tag: 'h4', className: '', value: 'h4' },
+                    { title: 'Heading 5', tag: 'h5', className: '', value: 'h5' },
+                    { title: 'Heading 6', tag: 'h6', className: '', value: 'h6' },
+                    'blockquote',
+                    'pre'
+                ],
+                placeholder: 'Enter your page content here...',
+                tabsize: 2,
+                callbacks: {
+                    onInit: function() {
+                        // Additional dark theme fixes
+                        $('.note-editable').css('color', '#E2E8F0');
+                    }
+                }
+            });
+        });
+    </script>
+    @endpush
 </x-admin-layout>
